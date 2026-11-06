@@ -1,411 +1,221 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Una Sangre — Beta Reading</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>May Yeoshen — Una Sangre</title>
+<meta name="description" content="May Yeoshen — art director, painter and creator of Una Sangre, a hand-painted literary visual novel.">
+<!-- Preview image for links shared on social media -->
+<meta property="og:title" content="May Yeoshen — Una Sangre">
+<meta property="og:description" content="A literary visual novel about five immortals across eight centuries. Written, painted and developed by May Yeoshen.">
+<meta property="og:image" content="img/una-sangre/hero.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
-<style>
-
-:root {
-  --bg:         #f4efe6;
-  --bg2:        #ece6d9;
-  --text:       #1a1410;
-  --muted:      #a8957e;
-  --accent:     #6b4c2a;
-  --accent2:    #a07848;
-  --border:     rgba(107,76,42,0.18);
-  --shadow:     0 4px 40px rgba(60,30,10,0.10);
-}
-body.dark {
-  --bg:         #0e0c0a;
-  --bg2:        #141210;
-  --text:       #ede4d6;
-  --muted:      #a8957e;
-  --accent:     #a07848;
-  --accent2:    #c49a6a;
-  --border:     rgba(160,120,72,0.16);
-  --shadow:     0 4px 40px rgba(0,0,0,0.5);
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { font-size: 20px; scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'EB Garamond', Georgia, serif;
-  line-height: 1.8;
-  transition: background 0.35s, color 0.35s;
-  min-height: 100vh;
-}
-
-/* subtle grain */
-body::after {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 999;
-}
-
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2.5rem;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  transition: background 0.35s;
-}
-
-.nav-title {
-  font-family: 'Cinzel', serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.28em;
-  color: var(--accent2);
-  text-transform: uppercase;
-}
-
-.nav-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.lang-toggle {
-  display: flex;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.lang-btn {
-  background: none;
-  border: none;
-  padding: 0.25rem 0.75rem;
-  font-family: 'Cinzel', serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  color: var(--muted);
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-.lang-btn.active {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-.theme-btn {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  width: 2.2rem;
-  height: 1.85rem;
-  font-size: 0.9rem;
-  color: var(--muted);
-  cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
-  display: flex; align-items: center; justify-content: center;
-  line-height: 1;
-}
-.theme-btn:hover { color: var(--accent2); border-color: var(--accent2); }
-
-/* ── MAIN ── */
-main {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 7.5rem 2rem 5rem;
-}
-
-/* ── HERO ── */
-.hero {
-  text-align: center;
-  padding-bottom: 3.5rem;
-  margin-bottom: 3.5rem;
-  border-bottom: 1px solid var(--border);
-  animation: rise 0.9s ease both;
-}
-
-.hero-eyebrow {
-  font-family: 'Cinzel', serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.32em;
-  color: var(--accent2);
-  text-transform: uppercase;
-  margin-bottom: 1.4rem;
-}
-
-.hero h1 {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(2.6rem, 7vw, 4.2rem);
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  color: var(--text);
-  line-height: 1.1;
-  margin-bottom: 1.2rem;
-}
-
-.hero-sub {
-  font-style: italic;
-  font-size: 1rem;
-  color: var(--muted);
-  line-height: 1.7;
-  max-width: 420px;
-  margin: 0 auto 2.5rem;
-}
-
-/* ── PDF BUTTONS ── */
-.pdf-row {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  animation: rise 0.9s 0.15s ease both;
-}
-
-.pdf-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.6rem;
-  border: 1px solid var(--accent);
-  color: var(--accent2);
-  font-family: 'Cinzel', serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
-  cursor: pointer;
-  background: none;
-}
-.pdf-btn:hover {
-  background: var(--accent);
-  color: var(--bg);
-}
-.pdf-btn svg {
-  width: 14px; height: 14px;
-  stroke: currentColor; fill: none;
-  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
-  flex-shrink: 0;
-}
-
-/* ── SYNOPSIS ── */
-.synopsis {
-  margin-bottom: 3.5rem;
-  animation: rise 0.9s 0.25s ease both;
-}
-
-.section-label {
-  font-family: 'Cinzel', serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.28em;
-  color: var(--accent2);
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
-.synopsis p {
-  font-size: 0.95rem;
-  color: var(--muted);
-  line-height: 1.85;
-  margin-bottom: 0.8rem;
-}
-
-/* ── DIVIDER ── */
-.ornament {
-  text-align: center;
-  color: var(--accent2);
-  font-size: 0.75rem;
-  letter-spacing: 0.4em;
-  margin: 3rem 0;
-  opacity: 0.6;
-}
-
-/* ── FORM ── */
-.form-section {
-  margin-top: 1rem;
-  animation: rise 0.9s 0.35s ease both;
-}
-
-.form-section .section-label {
-  margin-bottom: 0.5rem;
-}
-
-.form-note {
-  font-style: italic;
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-  line-height: 1.65;
-}
-
-.form-embed {
-  width: 100%;
-  min-height: 860px;
-  border: 1px solid var(--border);
-  background: var(--bg2);
-  display: block;
-}
-
-/* ── FOOTER ── */
-footer {
-  text-align: center;
-  padding: 2.5rem 2rem;
-  font-size: 0.75rem;
-  font-style: italic;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-  border-top: 1px solid var(--border);
-}
-
-/* ── LANG VISIBILITY ── */
-.es { display: block; }
-.en { display: none; }
-body.lang-en .es { display: none; }
-body.lang-en .en { display: block; }
-
-/* inline spans */
-span.es, span.en { display: inline; }
-body.lang-en span.es { display: none; }
-body.lang-en span.en { display: inline; }
-
-/* ── ANIMATION ── */
-@keyframes rise {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ── MOBILE ── */
-@media (max-width: 560px) {
-  nav { padding: 0.8rem 1.2rem; }
-  main { padding: 6.5rem 1.2rem 4rem; }
-  .pdf-row { flex-direction: column; align-items: center; }
-  .pdf-btn { width: 100%; justify-content: center; }
-}
-
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+SC:wght@500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-<body class="dark">
+<body>
 
-<nav>
-  <span class="nav-title">Una Sangre</span>
-  <div class="nav-controls">
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
-      <button class="lang-btn"        id="btn-en" onclick="setLang('en')">EN</button>
-    </div>
-    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Cambiar tema">☀</button>
-  </div>
-</nav>
+<header class="nav">
+  <a class="nav__name" href="#top">May Yeoshen</a>
+  <nav>
+    <a href="#una-sangre">Una Sangre</a>
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#resume">Résumé</a>
+  </nav>
+</header>
 
-<main>
-
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-eyebrow">
-      <span class="es">Lectura Beta — Bosquejo del Prólogo y el Capítulo 1</span>
-      <span class="en">Beta reading — Working draft</span>
-    </div>
-    <h1>Una Sangre</h1>
-    <p class="hero-sub es">Cinco inmortales. Ocho siglos.</p>
-    <p class="hero-sub en">Five immortals. Eight centuries.</p>
-
-    <div class="pdf-row">
-      <a class="pdf-btn es" href="UnaSangre_beta_ES.pdf" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-        Leer en español
-      </a>
-      <a class="pdf-btn en" href="UnaSangre_beta_EN.pdf" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-        Read in English
+<!-- ===================== UNA SANGRE ===================== -->
+<section class="hero" id="top">
+  <img class="hero__bg" src="img/una-sangre/hero.webp" alt="">
+  <div class="hero__content">
+    <img class="hero__logo" src="img/una-sangre/logo.webp" alt="Una Sangre">
+    <p class="hero__line">A story about the cost of going on existing<br>when there is no reason left to.</p>
+    <div class="hero__actions">
+      <!-- Replace STEAM_APP_ID with the app number once the page is public -->
+      <a class="wishlist" href="https://steamcommunity.com/profiles/76561198663779356/">
+        <span class="icon icon--big">
+          <img src="img/icons/SteamLogoWL.webp" alt="">
+          <img class="icon__hover" src="img/icons/SteamLogoWLHover.webp" alt="">
+        </span>
+        <span class="wishlist__text">Wishlist</span>
       </a>
     </div>
   </div>
+</section>
 
-  <!-- SYNOPSIS -->
-  <div class="synopsis">
-    <div class="section-label">
-      <span class="es">Sinopsis</span>
-      <span class="en">Synopsis</span>
-    </div>
-    <div class="es">
-      <p>Una tragedia psicológica oscura sobre el peso de los siglos</p>
-      <p>Una Sangre es una novela visual independiente centrada en la responsabilidad moral y el peso del trauma a lo largo de los siglos. Lo que ocurre cuando observas a la humanidad cometer los mismos errores una y otra vez y, a pesar de tu posición, decides aislarte y no intervenir.</p>
-      <p>Más cerca de la tragedia de cámara de Chéjov que del terror gótico: aquí no hay villanos, solo personas cuya naturaleza las destruye.</p>
-      <p>La fe es tomada en serio y se explora sin ironía ni resolución fácil. No hay redenciones banales.</p>
-      <p>Es un relato donde los silencios, la atmósfera y lo innombrable tienen tanto peso como los diálogos.</p>
-      <p>El narrador no es neutral: se contamina con el vocabulario de cada personaje, hasta que la prosa misma piensa como ellos.</p>
-    </div>
-    <div class="en">
-      <p>A dark psychological tragedy about the weight of centuries.</p>
-      <p>Una Sangre is an indie visual novel focused on moral responsibility and the burden of trauma across the centuries. What happens when you watch humanity make the same mistakes over and over again and, despite your position, decide to isolate yourself and not intervene.</p>
-      <p>Faith is taken seriously and explored without irony or easy resolutions. There are no cheap redemptions.</p>
-      <p>It’s a story where silences, atmosphere, and the unnameable carry as much weight as the dialogue.</p>
-      <p>The narrator is not neutral: it gets colored by each character’s vocabulary, until the prose itself thinks like them.</p>
+<section class="game" id="una-sangre">
+  <div class="game__text">
+    <h2>Una Sangre</h2>
+    <p class="lead">Five immortals. Eight centuries. A literary visual novel about guilt, faith, and the cost of choosing not to intervene.</p>
+    <p>Una Sangre is written, painted and developed by one person with 15 years of experience in the 2D animation industry (Netflix, Disney TV, Mercury Filmworks), under the name Studio Minaz.</p>
+    <p>Every line is written to be read slowly. There are few choices, and they are not small ones.</p>
+    <dl class="facts">
+      <div><dt>Format</dt><dd>Visual novel · Ren'Py</dd></div>
+      <div><dt>Languages</dt><dd>English · Español · 日本語</dd></div>
+      <div><dt>Demo</dt><dd>Prologue and the first third of Chapter One ~ about 1hr</dd></div>
+      <div><dt>Status</dt><dd>In development</dd></div>
+    </dl>
+    <div class="socials">
+      <a class="icon" href="https://steamcommunity.com/profiles/76561198663779356/" aria-label="Una Sangre on Steam" title="Una Sangre on Steam">
+        <img src="img/icons/steam.webp" alt="">
+        <img class="icon__hover" src="img/icons/steam-hover.webp" alt="">
+      </a>
+      <a class="icon" href="https://www.reddit.com/r/UnaSangreVN/" aria-label="r/UnaSangreVN on Reddit" title="r/UnaSangreVN on Reddit">
+        <img src="img/icons/reddit.webp" alt="">
+        <img class="icon__hover" src="img/icons/reddit-hover.webp" alt="">
+      </a>
+      <a class="icon" href="https://x.com/studioMinaz" aria-label="Studio Minaz on X" title="Studio Minaz on X">
+        <img src="img/icons/x.webp" alt="">
+        <img class="icon__hover" src="img/icons/x-hover.webp" alt="">
+      </a>
+      <a class="icon" href="https://www.instagram.com/studiominaz/" aria-label="Studio Minaz on Instagram" title="Studio Minaz on Instagram">
+        <img src="img/icons/instagram.webp" alt="">
+        <img class="icon__hover" src="img/icons/instagram-hover.webp" alt="">
+      </a>
     </div>
   </div>
+  <figure class="game__capsule">
+    <img src="img/una-sangre/store_capsule_vertical.webp" alt="Glenn Sheridan, key art for Una Sangre" loading="lazy">
+  </figure>
+</section>
 
-  <div class="ornament">— ✦ —</div>
 
-  <!-- FORM -->
-  <div class="form-section">
-    <div class="section-label">
-      <span class="es">Formulario de feedback</span>
-      <span class="en">Feedback form</span>
-    </div>
-    <p class="form-note es">Tus respuestas son anónimas y sirven directamente al desarrollo del proyecto. Gracias por leer.</p>
-    <p class="form-note en">Your answers are anonymous and feed directly into the development of the project. Thank you for reading.</p>
-
-    <iframe class="form-embed es"
-      src="https://docs.google.com/forms/d/e/1FAIpQLSf_zjfNLPU49iX_tIkJGIC-p_4Mddl0uaWFVjOojzZ9I8lDkQ/viewform?embedded=true"
-      frameborder="0" marginheight="0" marginwidth="0" loading="lazy">Cargando…</iframe>
-
-    <iframe class="form-embed en"
-      src="https://docs.google.com/forms/d/e/1FAIpQLSd-p92ALoqOz8Ky1xc8NkTHuGA11DKvyJGh_w-sgvW1VuFyhA/viewform?embedded=true"
-      frameborder="0" marginheight="0" marginwidth="0" loading="lazy">Loading…</iframe>
+<!-- ===================== WORK ===================== -->
+<section class="work" id="work">
+  <h2>Screenshots</h2>
+  <div class="screens">
+    <figure><a href="img/screens/01.webp" class="zoom"><img src="img/screens/01.webp" alt="Juno and Glenn in a European room, Japanese version" loading="lazy"></a></figure>
+    <figure><a href="img/screens/02.webp" class="zoom"><img src="img/screens/02.webp" alt="Juno laughing at a salon, English version" loading="lazy"></a></figure>
+    <figure><a href="img/screens/03.webp" class="zoom"><img src="img/screens/03.webp" alt="The tavern, Spanish version" loading="lazy"></a></figure>
+    <figure><a href="img/screens/04.webp" class="zoom"><img src="img/screens/04.webp" alt="Coltrane at the Holland party, Japanese version" loading="lazy"></a></figure>
+    <figure><a href="img/screens/05.webp" class="zoom"><img src="img/screens/05.webp" alt="Decision One: the photograph" loading="lazy"></a></figure>
+    <figure><a href="img/screens/06.webp" class="zoom"><img src="img/screens/06.webp" alt="The Archive, Glenn's record" loading="lazy"></a></figure>
+    <figure><a href="img/screens/07.webp" class="zoom"><img src="img/screens/07.webp" alt="Diana's house at night, Spanish version" loading="lazy"></a></figure>
+    <figure><a href="img/screens/08.webp" class="zoom"><img src="img/screens/08.webp" alt="The 1765 indenture" loading="lazy"></a></figure>
   </div>
 
-</main>
+  <h2 class="work__title">Selected work</h2>
+  <div class="masonry">
+    <figure><a href="img/work/glenn-2008.webp" class="zoom"><img src="img/work/glenn-2008.webp" alt="Portrait of a man with long red hair in a dark suit" loading="lazy"></a><figcaption>Glenn Sheridan, 2008</figcaption></figure>
+    <figure><a href="img/work/paul-scarf.webp" class="zoom"><img src="img/work/paul-scarf.webp" alt="Portrait of a young man with long blond hair and a white scarf" loading="lazy"></a><figcaption>Paul, 2004</figcaption></figure>
+    <figure><a href="img/work/juno-millet.webp" class="zoom"><img src="img/work/juno-millet.webp" alt="Portrait of a woman in sixteenth-century dress" loading="lazy"></a><figcaption>Juno Millet</figcaption></figure>
+    <figure><a href="img/work/bus-01.webp" class="zoom"><img src="img/work/bus-01.webp" alt="Pencil sketches of bus passengers" loading="lazy"></a><figcaption>From “98/116”, sketches drawn on the bus</figcaption></figure>
+    <figure><a href="img/work/cuchulainn.webp" class="zoom"><img src="img/work/cuchulainn.webp" alt="Painting of a warrior with a spear standing over a fallen wolf" loading="lazy"></a><figcaption>Cú Chulainn</figcaption></figure>
+    <figure><a href="img/work/dagger-ink.webp" class="zoom"><img src="img/work/dagger-ink.webp" alt="Ink drawing of a bearded man with a hand over his mouth, holding a dagger" loading="lazy"></a><figcaption>Paul in Dalmatia</figcaption></figure>
+    <figure><a href="img/work/red-cap.webp" class="zoom"><img src="img/work/red-cap.webp" alt="Portrait in the Renaissance style with a red cap and fur collar" loading="lazy"></a><figcaption>Armand the Vampire</figcaption></figure>
+    <figure><a href="img/work/quill.webp" class="zoom"><img src="img/work/quill.webp" alt="Eighteenth-century portrait of a young man writing with a quill" loading="lazy"></a><figcaption>Coltrane Holland, 2011</figcaption></figure>
+    <figure><a href="img/work/hands-ink.webp" class="zoom"><img src="img/work/hands-ink.webp" alt="Ink drawing of a man inserting prosthetic eyes" loading="lazy"></a><figcaption>Paul</figcaption></figure>
+    <figure><a href="img/work/blond-suit.webp" class="zoom"><img src="img/work/blond-suit.webp" alt="Portrait of a young man with blond hair, a suit and a striped tie" loading="lazy"></a><figcaption>Coltrane, 2009</figcaption></figure>
+    <figure><a href="img/work/folk-red.webp" class="zoom"><img src="img/work/folk-red.webp" alt="Folk-art illustration of a boy, a wolf and a cat on red" loading="lazy"></a><figcaption>Peter and the Wolf</figcaption></figure>
+    <figure><a href="img/work/bus-02.webp" class="zoom"><img src="img/work/bus-02.webp" alt="Pencil sketches of bus passengers in winter" loading="lazy"></a><figcaption>From “98/116”</figcaption></figure>
+    <figure><a href="img/work/armory.webp" class="zoom"><img src="img/work/armory.webp" alt="Ink illustration of a man in a suit in front of a wall of rifles" loading="lazy"></a><figcaption>Glenn, arms dealer</figcaption></figure>
+  </div>
+</section>
 
-<footer>
-  <span class="es">Una Sangre — Borrador de trabajo. No distribuir.</span>
-  <span class="en">Una Sangre — Working draft. Do not distribute.</span>
+<!-- ===================== ABOUT ===================== -->
+<section class="about" id="about">
+  <h2>About</h2>
+  <p>I'm May Yeoshen, a Venezuelan-Canadian artist with more than fifteen years in the animation industry. I have worked as an art director, background painter and character designer for Disney Television, Netflix, Nickelodeon, Mattel, Warner Bros. and 9 Story, among others.</p>
+  <p>These days I write, paint and develop <em>Una Sangre</em>, a story I have been carrying for more than twenty years.</p>
+  <p class="contact"><a href="mailto:mayyeo@gmail.com">mayyeo@gmail.com</a></p>
+  <!-- Add or remove your personal profiles here -->
+  <div class="socials">
+      <a class="icon" href="https://www.instagram.com/mayyeoshen" aria-label="Instagram" title="Instagram">
+        <img src="img/icons/instagram.webp" alt="">
+        <img class="icon__hover" src="img/icons/instagram-hover.webp" alt="">
+      </a>
+      <a class="icon" href="https://www.youtube.com/@MayYeo" aria-label="YouTube" title="YouTube">
+        <img src="img/icons/youtube.webp" alt="">
+        <img class="icon__hover" src="img/icons/youtube-hover.webp" alt="">
+      </a>
+      <a class="icon" href="https://www.linkedin.com/in/mayrhosby-yeoshen-17bb9021/" aria-label="LinkedIn" title="LinkedIn">
+        <img src="img/icons/linkedin.webp" alt="">
+        <img class="icon__hover" src="img/icons/linkedin-hover.webp" alt="">
+      </a>
+  </div>
+</section>
+
+<!-- ===================== RÉSUMÉ ===================== -->
+<section class="resume" id="resume">
+  <h2>Résumé</h2>
+  <p class="resume__title">Art Director &amp; Senior Artist</p>
+  <!-- Optional: put an up-to-date PDF without phone numbers next to index.html and uncomment.
+  <p><a class="btn" href="resume.pdf">Download PDF</a></p> -->
+
+  <h3>Experience</h3>
+
+  <div class="job"><div class="job__head"><span>Mercury Filmworks</span><span>2010 – 2025</span></div>
+    <p><b>Background Painter</b>, Warner Bros.' <i>Get Jiro!</i> (2025)</p>
+    <p><b>Colour Designer</b>, <i>Fangbone</i> demo (2014)</p>
+    <p><b>Background Painter</b>, Disney Television's <i>Fish Hooks</i> Season 1, <i>Shred Force</i> demo and <i>Team Hot Wheels: The Origin of Awesome</i> (2010 – 2012)</p>
+  </div>
+
+  <div class="job"><div class="job__head"><span>Milkcow Media</span><span>2023 – 2024</span></div>
+    <p><b>Art Director</b>, Big Jump Entertainment's <i>Polly Can Do</i> (2024)</p>
+    <p><b>Art Director</b>, <i>Polly's Big Day Out / Little Book of Big Firsts</i> (2023 – 2024). Established the complete visual identity of a preschool series: characters, locations and props.</p>
+  </div>
+
+  <div class="job"><div class="job__head"><span>Jamfilled Entertainment</span><span>2012 – 2022</span></div>
+    <p><b>Background Senior Painter</b>, Nickelodeon's <i>The Loud House</i> (2022)</p>
+    <p><b>Background Painter</b>, Netflix's <i>Inside Job</i> (2021 – 2022)</p>
+    <p><b>Background Supervisor</b>, Nickelodeon's <i>The Loud House</i> (2018 – 2021). Led the background team and kept the show's style consistent on weekly deadlines.</p>
+    <p><b>Background Painter</b>, Nickelodeon's <i>Bubble Guppies</i> (2019)</p>
+    <p><b>Lead Designer</b>, Mattel's <i>Wellie Wishers</i> Season 2 (2017 – 2018)</p>
+    <p><b>Background Supervisor</b>, Nickelodeon's <i>Pinky Malinky</i> Season 1 (2016 – 2017)</p>
+    <p><b>Colour Designer</b>, Teletoon's <i>The Bagel and Becky Show</i> (2015 – 2016)</p>
+    <p><b>Background Revisionist</b>, Nickelodeon's <i>The Loud House</i> Season 1 (2015 – 2016)</p>
+    <p><b>Colour Designer</b>, <i>The Day My Butt Went Psycho</i> and Nickelodeon demos (2014)</p>
+    <p><b>Background Painter</b>, 9 Story's <i>Camp Lakebottom</i> Season 1 (2012 – 2013)</p>
+  </div>
+
+  <div class="job"><div class="job__head"><span>Other studios</span><span>2009 – 2023</span></div>
+    <p><b>Children's Book Illustrator</b>, Epic Story Media, <i>Piper's Pony Tales</i> (2023)</p>
+    <p><b>Character Design Supervisor</b>, Sphere Animation, TVO's <i>Riley Rocket</i> (2022)</p>
+    <p><b>Character Designer</b>, Netflix, <i>The Empathy Project</i> short film (2021)</p>
+    <p><b>Children's Book Illustrator</b>, Magelica Inc., Louise Courey's <i>Magelica</i> (2014)</p>
+    <p><b>Background Painter</b>, 9 Story Media Group, <i>Wild Kratts</i> Seasons 1–3 (2009 – 2014)</p>
+    <p><b>Background Painter</b>, Big Jump Productions, <i>Bounty Hunters</i> and <i>Benjamin Bear</i> Season 4 (2009 – 2013)</p>
+  </div>
+
+  <h3>Education</h3>
+  <p>Traditional Animation, Algonquin College, Ottawa. Graduated with Honors (2006 – 2009)</p>
+  <p>Concept Art, Visual Arts Passage, online (2019 – 2020)</p>
+
+  <h3>Awards and publications</h3>
+  <p>Student short film <i>Charged</i>: winner at the Stamford Children's Film Festival, England; screened at the Yorkton Film Festival.</p>
+  <p>Selected in <i>Painter</i>, <i>Exotique 4</i> and <i>Exposé 10</i>, Ballistic Publishing.</p>
+  <p>Tutorials for the Official Corel Painter Magazine and cover of issue 16. Winning image for the Corel Painter IX.5 campaign.</p>
+  <p>Author of <i>98/116</i>, a book of sketches of people drawn while commuting by bus.</p>
+  <p>Solo exhibition of digital art, Chamber of Commerce of Puerto Ordaz (2005).</p>
+
+  <h3>Tools and languages</h3>
+  <p>Toon Boom Harmony, Photoshop, Clip Studio Paint, Corel Painter, Premiere, Ren'Py</p>
+  <p>Spanish, English, Japanese (notions)</p>
+</section>
+
+<footer class="foot">
+  <p>© Mayrhosby Yeoshen · Studio Minaz</p>
 </footer>
 
+<!-- Click on any image to see it larger -->
+<dialog class="lightbox" id="lightbox">
+  <img src="" alt="">
+  <button type="button" aria-label="Close">×</button>
+</dialog>
 <script>
-  // ── THEME ──
-  const savedTheme = localStorage.getItem('us-theme') || 'dark';
-  applyTheme(savedTheme);
-
-  function toggleTheme() {
-    const isDark = document.body.classList.contains('dark');
-    applyTheme(isDark ? 'light' : 'dark');
-  }
-  function applyTheme(t) {
-    document.body.classList.toggle('dark', t === 'dark');
-    document.getElementById('theme-btn').textContent = t === 'dark' ? '☀' : '☾';
-    localStorage.setItem('us-theme', t);
-  }
-
-  // ── LANGUAGE ──
-  const savedLang = localStorage.getItem('us-lang') || 'es';
-  applyLang(savedLang);
-
-  function setLang(l) { applyLang(l); }
-  function applyLang(l) {
-    document.body.classList.toggle('lang-en', l === 'en');
-    document.documentElement.lang = l;
-    document.getElementById('btn-es').classList.toggle('active', l === 'es');
-    document.getElementById('btn-en').classList.toggle('active', l === 'en');
-    localStorage.setItem('us-lang', l);
-  }
+  const box = document.getElementById('lightbox');
+  const big = box.querySelector('img');
+  document.querySelectorAll('a.zoom').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      big.src = a.getAttribute('href');
+      big.alt = a.querySelector('img').alt;
+      box.showModal();
+    });
+  });
+  box.addEventListener('click', () => box.close());
 </script>
 
 </body>
